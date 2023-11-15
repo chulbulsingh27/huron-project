@@ -1,4 +1,5 @@
 import axios from "axios";
+//import jwt from 'jsonwebtoken';
 import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,6 +16,23 @@ export default function RegisterModal({ showModal, setShowModal }) {
   //   localStorage.setItem("userData", JSON.stringify(data));
   //   toast.success("You are successfully registered. Kindly login.");
   // };
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await axios.post('http://localhost:5046/api/Users', {
+  //       FirstName: firstName,
+  //       LastName: lastName,
+  //       EmailAddress: email,
+  //       MobileNumber: mobileNumber,
+  //       Password: password,
+  //       Role: role
+  //     });
+  //     console.log('Data successfully updated in the database');
+  //   } catch (error) {
+  //     console.error('Error:', error.response.status, error.response.statusText, error.response.data);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -26,6 +44,10 @@ export default function RegisterModal({ showModal, setShowModal }) {
         Password: password,
         Role: role
       });
+      const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJlOWE2NzYwYS05ZDk0LTQ5MGYtOGVlMi04ZDJkMWExZDU1MTUiLCJpYXQiOiIxMS8xNS8yMDIzIDQ6Mzk6MDUgQU0iLCJVc2VySWQiOiI1IiwiRmlyc3ROYW1lIjoiYmIiLCJMYXN0TmFtZSI6ImxrIiwiRW1haWxBZGRyZXNzIjoiYmJAZ21haWwuY29tIiwiTW9iaWxlTnVtYmVyIjoiNTQ2Nzg3OTgiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTcwMDAyMzc0NSwiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.SqSpVqxJvWev4Jua5IoEQ7Nrdm4wPOcGhImVIJo9JkU
+      `
+      localStorage.setItem('token', token);
+  
       console.log('Data successfully updated in the database');
     } catch (error) {
       console.error('Error:', error.response.status, error.response.statusText, error.response.data);

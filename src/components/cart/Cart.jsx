@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+//2023-11-13 07:19:26.0900000
+//2023-11-14 12:46:24.3440000
 function Cart({ cart, setCart }) {
   const [showModal, setShowModal] = useState(false);
   //const [orderId, setOrderId] = useState(null);
   const [userId, setUserId] = useState(1);
   const [productId, setProductId] = useState(1);
-  //const [orderDate, setOrderDate] = useState(null);
-  //const [totalAmount, setTotalAmount] = useState(null);
+  const [orderDate, setOrderDate] = useState("2023-11-13 07:19:26.0900000");
+  const [totalAmount, setTotalAmount] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const handleIncrement = (index) => {
     const newCart = [...cart];
@@ -41,6 +43,8 @@ function Cart({ cart, setCart }) {
           UserId: userId,
           ProductId: productId,
           Quantity: quantity,
+          OrderDate: orderDate,
+          TotalAmount:totalAmount
         });
 
         console.log("Order created successfully");
@@ -48,8 +52,8 @@ function Cart({ cart, setCart }) {
         //setOrderId(response.data.OrderId);
         setUserId(response.data.UserId);
         setProductId(response.data.ProductId);
-        //setOrderDate(response.data.OrderDate);
-        //setTotalAmount(response.data.TotalAmount);
+        setOrderDate(response.data.OrderDate);
+        setTotalAmount(response.data.TotalAmount);
         setQuantity(response.data.Quantity);
       } catch (error) {
         console.error(
