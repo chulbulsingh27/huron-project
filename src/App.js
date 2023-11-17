@@ -12,22 +12,23 @@ import Home from "./components/Home/Home";
 function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
 
   return (
-    <div className="App">
+    <div className="">
       <Router>
         <Header cart={cart} toggleCart={toggleCart} />
         {isCartOpen && <Cart cart={cart} setCart={setCart} />}
         <Routes>
           <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
+          <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
         </Routes>
         <Footer />
       </Router>

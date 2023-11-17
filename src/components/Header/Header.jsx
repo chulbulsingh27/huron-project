@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import image from "./image.png"
 
 import { Link, NavLink } from "react-router-dom";
 import { BsCart2 } from "react-icons/bs";
 import RegisterModal from "../Register/RegisterModal";
 import Login from "../Login/Login";
 //import RegisterModal from "../../Register/RegisterModal";
-
+//cart, toggleCart, isLoggedIn, setIsLoggedIn
 export default function Header({ cart, toggleCart }) {
   const [showModal, setShowModal] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -22,8 +23,9 @@ export default function Header({ cart, toggleCart }) {
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
-              src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
-              className="mr-3 h-12"
+              //src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
+              src={image}
+              className="mr-3 h-16"
               alt="Logo"
             />
           </Link>

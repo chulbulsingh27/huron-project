@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-//2023-11-13 07:19:26.0900000
-//2023-11-14 12:46:24.3440000
 function Cart({ cart, setCart }) {
   const [showModal, setShowModal] = useState(false);
   //const [orderId, setOrderId] = useState(null);
-  const [userId, setUserId] = useState(1);
-  const [productId, setProductId] = useState(1);
-  const [orderDate, setOrderDate] = useState("2023-11-13 07:19:26.0900000");
+  const [userId, setUserId] = useState(2);
+  const [productId, setProductId] = useState(2);
+ // const [orderDate, setOrderDate] = useState(new Date("2023-11-13T07:19:26.090Z"));
+
   const [totalAmount, setTotalAmount] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const handleIncrement = (index) => {
@@ -28,14 +27,6 @@ function Cart({ cart, setCart }) {
   const totalPrice = cart
     .reduce((total, item) => total + item.price * (1 - 0.1) * item.quantity, 0)
     .toFixed(2);
-  // const handlePayNow = () => {
-  //   if (totalPrice > 0) {
-  //     setShowModal(true);
-  //   } else {
-  //     alert("Nothing is in your cart. Add something to your cart.");
-  //   }
-  // };
-
   const handlePayNow = async () => {
     if (totalPrice > 0) {
       try {
@@ -43,7 +34,7 @@ function Cart({ cart, setCart }) {
           UserId: userId,
           ProductId: productId,
           Quantity: quantity,
-          OrderDate: orderDate,
+          // OrderDate: orderDate,
           TotalAmount:totalAmount
         });
 
@@ -52,16 +43,11 @@ function Cart({ cart, setCart }) {
         //setOrderId(response.data.OrderId);
         setUserId(response.data.UserId);
         setProductId(response.data.ProductId);
-        setOrderDate(response.data.OrderDate);
+        // setOrderDate(response.data.OrderDate);
         setTotalAmount(response.data.TotalAmount);
         setQuantity(response.data.Quantity);
       } catch (error) {
-        console.error(
-          "Error:",
-          error.response.status,
-          error.response.statusText,
-          error.response.data
-        );
+        console.log(error)
       }
     } else {
       alert("Nothing is in your cart. Add something to your cart.");
@@ -79,7 +65,7 @@ function Cart({ cart, setCart }) {
           transition={{ delay: 1 }}
         >
           <h3 className="text-white font-bold text-xl ml-10">{item.name}</h3>
-          <p className="text-white font-semibold text-xl">${item.price}</p>
+          <p className="text-white font-semibold text-xl">Rs.{item.price}</p>
           <button
             onClick={() => handleIncrement(index)}
             className=" bg-green-500 text-white px-2 py-1 rounded"

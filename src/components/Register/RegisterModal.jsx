@@ -1,7 +1,8 @@
 import axios from "axios";
 //import jwt from 'jsonwebtoken';
 import React, { useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 export default function RegisterModal({ showModal, setShowModal }) {
   const [firstName, setFirstName] = useState("");
@@ -9,7 +10,7 @@ export default function RegisterModal({ showModal, setShowModal }) {
   const [email, setEmail] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [role,setRole] = useState("");
+  const [role, setRole] = useState("");
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   //   const data = { firstName, lastName, email, mobileNumber, password, role};
@@ -36,24 +37,31 @@ export default function RegisterModal({ showModal, setShowModal }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5046/api/Users', {
+      const response = await axios.post("http://localhost:5046/api/Users", {
         FirstName: firstName,
         LastName: lastName,
         EmailAddress: email,
         MobileNumber: mobileNumber,
         Password: password,
-        Role: role
+        Role: role,
       });
       const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJlOWE2NzYwYS05ZDk0LTQ5MGYtOGVlMi04ZDJkMWExZDU1MTUiLCJpYXQiOiIxMS8xNS8yMDIzIDQ6Mzk6MDUgQU0iLCJVc2VySWQiOiI1IiwiRmlyc3ROYW1lIjoiYmIiLCJMYXN0TmFtZSI6ImxrIiwiRW1haWxBZGRyZXNzIjoiYmJAZ21haWwuY29tIiwiTW9iaWxlTnVtYmVyIjoiNTQ2Nzg3OTgiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTcwMDAyMzc0NSwiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.SqSpVqxJvWev4Jua5IoEQ7Nrdm4wPOcGhImVIJo9JkU
-      `
-      localStorage.setItem('token', token);
-  
-      console.log('Data successfully updated in the database');
+      `;
+      localStorage.setItem("token", token);
+
+      console.log("Data successfully updated in the database");
+      toast.success('You have been registered. Thanks!');
     } catch (error) {
-      console.error('Error:', error.response.status, error.response.statusText, error.response.data);
+      console.error(
+        "Error:",
+        error.response.status,
+        error.response.statusText,
+        error.response.data
+      );
+      toast.error("An error occurred while registering.");
     }
   };
-  
+
   if (!showModal) return null;
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -64,7 +72,10 @@ export default function RegisterModal({ showModal, setShowModal }) {
         </div>
         <span
           className="hidden sm:inline-block sm:align-middle sm:h-screen"
-          aria-hidden="true">          ​
+          aria-hidden="true"
+        >
+          {" "}
+          ​
         </span>
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
@@ -72,7 +83,8 @@ export default function RegisterModal({ showModal, setShowModal }) {
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3
                   className="text-lg leading-6 font-medium text-gray-900"
-                  id="modal-title">
+                  id="modal-title"
+                >
                   Registration
                 </h3>
                 <div className="mt-2">
@@ -128,6 +140,10 @@ export default function RegisterModal({ showModal, setShowModal }) {
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                       type="submit"
+                      onClick={() => {
+                        toast.success("You have been registered. Thanks!");
+                        // Add your form submission logic here
+                      }}
                     >
                       Submit
                     </button>
