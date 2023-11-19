@@ -6,10 +6,11 @@ function Cart({ cart, setCart }) {
   //const [orderId, setOrderId] = useState(null);
   const [userId, setUserId] = useState(2);
   const [productId, setProductId] = useState(2);
- // const [orderDate, setOrderDate] = useState(new Date("2023-11-13T07:19:26.090Z"));
-
+  const [orderDate, setOrderDate] = useState("2023-11-13T07:19:26.090Z");
+  const [paymentMethod,setPaymetMethod] = useState("Credit Card")
+  const [orderStatus,setOrderStatus]  = useState("confirmed")
   const [totalAmount, setTotalAmount] = useState(null);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const handleIncrement = (index) => {
     const newCart = [...cart];
     newCart[index].quantity += 1;
@@ -34,18 +35,21 @@ function Cart({ cart, setCart }) {
           UserId: userId,
           ProductId: productId,
           Quantity: quantity,
-          // OrderDate: orderDate,
-          TotalAmount:totalAmount
+         OrderDate: orderDate,
+          TotalAmount:totalAmount,
+          PaymentMethod:paymentMethod,
+          OrderStatus:orderStatus
         });
-
         console.log("Order created successfully");
         setShowModal(true);
         //setOrderId(response.data.OrderId);
         setUserId(response.data.UserId);
         setProductId(response.data.ProductId);
-        // setOrderDate(response.data.OrderDate);
+        setOrderDate(response.data.OrderDate);
         setTotalAmount(response.data.TotalAmount);
         setQuantity(response.data.Quantity);
+        //setPaymetMethod(response.data.PaymentMethod)
+        //setOrderStatus(response.data.OrderStatus)
       } catch (error) {
         console.log(error)
       }
@@ -53,7 +57,6 @@ function Cart({ cart, setCart }) {
       alert("Nothing is in your cart. Add something to your cart.");
     }
   };
-
   return (
     <div className="flex flex-col items-center w-full h-[700px] bg-[#3b82f6] rounded-md">
       {cart.map((item, index) => (

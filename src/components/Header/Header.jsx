@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import image from "./image.png"
+import React, { useContext, useState } from "react";
+import image1 from "./image1.png"
 
 import { Link, NavLink } from "react-router-dom";
 import { BsCart2 } from "react-icons/bs";
 import RegisterModal from "../Register/RegisterModal";
 import Login from "../Login/Login";
+//import ThemeToggle from "../ToggleTheme/ThemeToggle";
+import { ThemeContext } from "../ToggleTheme/ThemeContext";
+
+
 //import RegisterModal from "../../Register/RegisterModal";
 //cart, toggleCart, isLoggedIn, setIsLoggedIn
 export default function Header({ cart, toggleCart }) {
@@ -17,14 +21,17 @@ export default function Header({ cart, toggleCart }) {
   const openModal = () => {
     setShowModal((prev) => !prev);
   };
+
+  const { darkMode } = useContext(ThemeContext);
   return (
-    <header className="shadow sticky z-50 top-0 ">
+    <header className={`shadow sticky z-50 top-0 ${darkMode ? 'dark' : ''}`}>
+      {/* <button onClick={toggleDarkMode}>Toggle Dark Mode</button> */}
       <nav className="bg-[#eaeced] border-gray-200 px-4 lg:px-6 py-2.5">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
               //src="https://alexharkness.com/wp-content/uploads/2020/06/logo-2.png"
-              src={image}
+              src={image1}
               className="mr-3 h-16"
               alt="Logo"
             />
@@ -102,6 +109,7 @@ export default function Header({ cart, toggleCart }) {
           </div>
         </div>
       </nav>
+      {/* <ThemeToggle /> */}
       {showModal && <RegisterModal showModal={showModal} setShowModal={setShowModal} />}
       {showLogin && <Login />} {/* Render the Login component when showLogin is true */}
     </header>

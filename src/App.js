@@ -6,25 +6,23 @@ import Contact from "./components/Contact/Contact";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
-//import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
+import { ThemeProvider } from "./components/ToggleTheme/ThemeContext";
 
 function App() {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
 
   return (
-    <div className="">
+    <ThemeProvider>
       <Router>
         <Header cart={cart} toggleCart={toggleCart} />
         {isCartOpen && <Cart cart={cart} setCart={setCart} />}
         <Routes>
-          <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
           <Route path="/" element={<Home cart={cart} setCart={setCart} />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -32,7 +30,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
-    </div>
+    </ThemeProvider>
   );
 }
 

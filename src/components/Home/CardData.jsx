@@ -12,6 +12,7 @@ function CardData({ cart, setCart }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [isDataFound, setIsDataFound] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const getData = () => {
     axios
@@ -23,6 +24,8 @@ function CardData({ cart, setCart }) {
         console.log(error);
       });
   };
+  //console.log(getData());
+  //console.log(data)
 
   const handleClick = (index) => {
     setIsLoading(true);
@@ -46,6 +49,29 @@ function CardData({ cart, setCart }) {
       setIsLoading(false);
     }, 500);
   };
+
+  // const handleClick = (index) => {
+  //   setIsLoading(true);
+  //   setIsAdded((prevIsAdded) => {
+  //     const newIsAdded = [...prevIsAdded];
+  //     newIsAdded[index] = !newIsAdded[index];
+  //     return newIsAdded;
+  //   });
+  //   // Update the cart state here
+  //   if (isAdded[index]) {
+  //     setCart((currentCart) =>
+  //       currentCart.filter((item) => item.id !== searchResults[index].id)
+  //     );
+  //   } else {
+  //     setCart((currentCart) => [
+  //       ...currentCart,
+  //       { ...searchResults[index], quantity: 1 },
+  //     ]);
+  //   }
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 500);
+  // };
   // added today
   const handleSearch = () => {
     if (searchTerm === "") {
@@ -148,6 +174,7 @@ function CardData({ cart, setCart }) {
             <div
               key={product.id}
               className="w-[300px] p-4 m-2  space-x-4 space-y-4"
+              onClick={() => setSelectedProduct(searchResults[index])} // Set selectedProduct when card is clicked
             >
               <div className="border border-gray-500 rounded-lg p-4 transition duration-500 ease-out transform hover:-translate-y-1 hover:scale-110 bg-green-200 ">
                 <img
@@ -164,7 +191,12 @@ function CardData({ cart, setCart }) {
                       ? "bg-red-500 text-white border-red-500 hover:bg-red-600"
                       : "bg-blue-500 text-white border-blue-500 hover:bg-blue-600"
                   }`}
-                  onClick={() => handleClick(index)}
+                  // onClick={() => handleClick(index)}
+
+                  onClick={(event) => {
+                    event.stopPropagation(); // Stop event from propagating to card div
+                    handleClick(index);
+                  }}
                 >
                   {isLoading[index] ? (
                     <span>Loading...</span>
@@ -178,9 +210,18 @@ function CardData({ cart, setCart }) {
             </div>
           ))
         ) : (
-          <NotFound/>
+          <NotFound />
         )}
       </div>
+
+      {selectedProduct && (
+        <div className="bg-orange-400 rounded-lg p-6 shadow-lg">
+          <h2 className="text-3xl font-bold text-blue-700 mb-2 text-center">
+            {selectedProduct.name}
+          </h2>
+          <p className="text-white text-lg font-semibold">{selectedProduct.description}</p>
+        </div>
+      )}
     </div>
   );
 }
