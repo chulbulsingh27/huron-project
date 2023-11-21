@@ -77,9 +77,9 @@ export default function RegisterModal({ showModal, setShowModal }) {
           {" "}
           ​
         </span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-            <div className="sm:flex sm:items-start">
+        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full ">
+          <div className=" px-4 pt-5 pb-4 sm:p-6 sm:pb-4 bg-[#f7e4cd]">
+            <div className="sm:flex sm:items-start ">
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3
                   className="text-lg leading-6 font-medium text-gray-900"
@@ -87,7 +87,7 @@ export default function RegisterModal({ showModal, setShowModal }) {
                 >
                   Registration
                 </h3>
-                <div className="mt-2">
+                <div className="mt-2 ">
                   <form onSubmit={handleSubmit}>
                     <input
                       className="border rounded w-full py-2 px-3 text-grey-darker mb-3"

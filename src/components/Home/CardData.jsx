@@ -4,6 +4,10 @@ import "./Translate.css";
 
 import { getProducts } from "../../constants";
 import NotFound from "./NotFound";
+import { GrClear } from "react-icons/gr";
+import { FcFilledFilter } from "react-icons/fc";
+import { TbSortAscendingNumbers } from "react-icons/tb";
+import { TbSortDescendingNumbers } from "react-icons/tb";
 const products = await getProducts();
 function CardData({ cart, setCart }) {
   const [isAdded, setIsAdded] = useState(Array(products.length).fill(false));
@@ -13,6 +17,9 @@ function CardData({ cart, setCart }) {
   const [data, setData] = useState([]);
   const [isDataFound, setIsDataFound] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  
 
   const getData = () => {
     axios
@@ -50,29 +57,6 @@ function CardData({ cart, setCart }) {
     }, 500);
   };
 
-  // const handleClick = (index) => {
-  //   setIsLoading(true);
-  //   setIsAdded((prevIsAdded) => {
-  //     const newIsAdded = [...prevIsAdded];
-  //     newIsAdded[index] = !newIsAdded[index];
-  //     return newIsAdded;
-  //   });
-  //   // Update the cart state here
-  //   if (isAdded[index]) {
-  //     setCart((currentCart) =>
-  //       currentCart.filter((item) => item.id !== searchResults[index].id)
-  //     );
-  //   } else {
-  //     setCart((currentCart) => [
-  //       ...currentCart,
-  //       { ...searchResults[index], quantity: 1 },
-  //     ]);
-  //   }
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 500);
-  // };
-  // added today
   const handleSearch = () => {
     if (searchTerm === "") {
       setSearchResults(products);
@@ -96,13 +80,24 @@ function CardData({ cart, setCart }) {
     setSearchResults(sortedProducts);
   };
 
+  const handleFilterByPriceRange = () => {
+    const filteredProducts = products.filter(
+      (product) =>
+        (!minPrice || product.price >= parseFloat(minPrice)) &&
+        (!maxPrice || product.price <= parseFloat(maxPrice))
+    );
+    setSearchResults(filteredProducts);
+  };
+
   const clearAllFilters = () => {
-    setSearchResults(products); // reset products to initial state
-    setSearchTerm(""); // clear the search term
+    setSearchResults(products);
+    setSearchTerm("");
+    setMinPrice("");
+    setMaxPrice("");
   };
 
   return (
-    <div className="bg-orange-100 w-full">
+    <div className="bg-gray-200 w-full">
       <p className="text-sm text-center py-4 bg-gray-300 text-black">
         <span className="font-bold text-2xl">
           Treat yourself to a new Mobile Phone
@@ -147,24 +142,47 @@ function CardData({ cart, setCart }) {
           </button>
         </div>
 
-        <div className="flex justify-end space-x-3">
+        <div className="flex justify-end space-x-3  mr-10">
+          <div className="flex items-center  mr-2">
+            <input
+              type="number"
+              placeholder="Min Price"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              className="border-2 border-gray-400 rounded-md outline-none p-2 ml-6"
+            />
+            <input
+              type="number"
+              placeholder="Max Price"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className="border-2 border-gray-400 rounded-md outline-none p-2 ml-2"
+            />
+            <button
+              onClick={handleFilterByPriceRange}
+              className="border-2 p-1.5 ml-2 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
+            >
+              <FcFilledFilter/>
+            </button>
+          </div>
+
           <button
             onClick={sortPriceAscending}
             className="border-2 p-1.5 mr-4 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
           >
-            Sort Price Ascending
+            <TbSortAscendingNumbers/>
           </button>
           <button
             onClick={sortPriceDescending}
             className="border-2 p-1.5 mr-2 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
           >
-            Sort Price Descending
+            <TbSortDescendingNumbers/>
           </button>
           <button
             onClick={clearAllFilters}
             className="border-2 p-1.5 bg-gray-600 hover:bg-blue-400 rounded-md text-white "
           >
-            Clear All Filters
+            <GrClear/>
           </button>
         </div>
       </div>
@@ -176,11 +194,12 @@ function CardData({ cart, setCart }) {
               className="w-[300px] p-4 m-2  space-x-4 space-y-4"
               onClick={() => setSelectedProduct(searchResults[index])} // Set selectedProduct when card is clicked
             >
-              <div className="border border-gray-500 rounded-lg p-4 transition duration-500 ease-out transform hover:-translate-y-1 hover:scale-110 bg-green-200 ">
+              <div className="border border-gray-500 rounded-lg p-4 transition duration-500 ease-out transform hover:-translate-y-1 hover:scale-110 bg-white">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-[400px] object-cover rounded-lg bg-slate-500"
+                  className="w-full h-[400px] 
+                   object-cover rounded-lg bg-slate-500"
                 />
                 <h3 className="text-lg font-semibold mt-2">{product.name}</h3>
                 <p className="text-gray-600">Price: Rs.{product.price}</p>
@@ -194,7 +213,7 @@ function CardData({ cart, setCart }) {
                   // onClick={() => handleClick(index)}
 
                   onClick={(event) => {
-                    event.stopPropagation(); // Stop event from propagating to card div
+                    event.stopPropagation();
                     handleClick(index);
                   }}
                 >
@@ -219,7 +238,9 @@ function CardData({ cart, setCart }) {
           <h2 className="text-3xl font-bold text-blue-700 mb-2 text-center">
             {selectedProduct.name}
           </h2>
-          <p className="text-white text-lg font-semibold">{selectedProduct.description}</p>
+          <p className="text-white text-lg font-semibold">
+            {selectedProduct.description}
+          </p>
         </div>
       )}
     </div>

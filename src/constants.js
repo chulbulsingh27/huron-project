@@ -46,7 +46,7 @@ export const getProducts = async () => {
   ];
   //const images = Array.from({ length: 20 }, (_, i) => `src/components/Footer/image${i + 1}.jpg`);
   const images = [
-    'https://www.pngmart.com/files/15/Apple-iPhone-12-Transparent-Background.png',
+    iphone15 ,
     sonyImage,
     asusImage,
     googleImage,

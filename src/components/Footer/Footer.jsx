@@ -1,5 +1,5 @@
 import React from "react";
-import image1 from "./image1.png"
+import image  from "./image.png"
 import{Link} from "react-router-dom"
 export default function Footer() {
     return (
@@ -9,7 +9,7 @@ export default function Footer() {
                     <div className="mb-6 md:mb-0">
                         <Link to="/" className="flex items-center">
                             <img
-                                src={image1}
+                                src={image}
                                 className="mr-3 h-16"
                                 alt="Logo"
                             />

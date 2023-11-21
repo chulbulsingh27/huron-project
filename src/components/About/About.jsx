@@ -14,12 +14,11 @@ export default function About() {
                             ABOUT US
                         </h2>
                         <p className="mt-6 text-gray-600">
-                            <strong><em>CANKA creates a culture of infinite possibilities. The deep trust and loyalty of our customers drive us to continually grow and lead innovation.</em></strong>
+                            <strong><em>9 creates a culture of infinite possibilities. The deep trust and loyalty of our customers drive us to continually grow and lead innovation.</em></strong>
                         </p>
 
                         <p className="mt-4 text-gray-600">
-                            Nobis minus voluptatibus pariatur dignissimos libero quaerat iure expedita at?
-                            Asperiores nemo possimus nesciunt dicta veniam aspernatur quam mollitia.
+                        We are a team of tech enthusiasts who believe in the power of innovation and connectivity. With a finger on the pulse of the mobile industry, we strive to deliver a seamless shopping experience for mobile enthusiasts, tech-savvy professionals, and anyone seeking quality mobile devices..
                         </p>
                     </div>
                 </div>
