@@ -23,7 +23,6 @@ export default function About() {
                     </div>
                 </div>
 
-                {/* Additional Images for workers, service centers, locations, and states */}
                 <div className="flex mt-12 space-x-6">
                     <img
                         src="https://sangeethamobiles.net/assets/front-end/img/About_2.png"

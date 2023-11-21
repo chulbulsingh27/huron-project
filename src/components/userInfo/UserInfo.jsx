@@ -4,31 +4,54 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-export default function RegisterModal({ showModal, setShowModal }) {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  
+export default function UserInfoModal({ showUser, setShowUser }) {
+  console.log(
+    "http://localhost:5046/api/users/1" + localStorage.getItem("userId")
+  );
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem("userInfo"))
+  );
+  // console.log(data.firstName);
+  const getData = () => {
+    console.log("get data is being exe");
+    axios
+      .get("http://localhost:5046/api/products")
+      .then((result) => {
+        setData(result.data);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  console.log(getData);
+  const [firstName, setFirstName] = useState(data.firstName);
+  console.log(data);
+  console.log(localStorage.getItem("userId"));
+  const [lastName, setLastName] = useState(data.lastName);
+  const [email, setEmail] = useState(data.emailAddress);
+  const [mobileNumber, setMobileNumber] = useState(data.mobileNumber);
+  const [password, setPassword] = useState(data.password);
+  const [role, setRole] = useState(data.role);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5046/api/Users", {
-        FirstName: firstName,
-        LastName: lastName,
-        EmailAddress: email,
-        MobileNumber: mobileNumber,
-        Password: password,
-        Role: role,
-      });
-      const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKV1RTZXJ2aWNlQWNjZXNzVG9rZW4iLCJqdGkiOiJlOWE2NzYwYS05ZDk0LTQ5MGYtOGVlMi04ZDJkMWExZDU1MTUiLCJpYXQiOiIxMS8xNS8yMDIzIDQ6Mzk6MDUgQU0iLCJVc2VySWQiOiI1IiwiRmlyc3ROYW1lIjoiYmIiLCJMYXN0TmFtZSI6ImxrIiwiRW1haWxBZGRyZXNzIjoiYmJAZ21haWwuY29tIiwiTW9iaWxlTnVtYmVyIjoiNTQ2Nzg3OTgiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJhZG1pbiIsImV4cCI6MTcwMDAyMzc0NSwiaXNzIjoiSldUQXV0aGVudGljYXRpb25TZXJ2ZXIiLCJhdWQiOiJKV1RTZXJ2aWNlUG9zdG1hbkNsaWVudCJ9.SqSpVqxJvWev4Jua5IoEQ7Nrdm4wPOcGhImVIJo9JkU
-      `;
-      localStorage.setItem("token", token);
+      const response = await axios.put(
+        "http://localhost:5046/api/Users/" + localStorage.getItem("userId"),
+        {
+          userId: localStorage.getItem("userId"),
+          FirstName: firstName,
+          LastName: lastName,
+          EmailAddress: email,
+          MobileNumber: mobileNumber,
+          Password: password,
+          Role: role,
+        }
+      );
 
       console.log("Data successfully updated in the database");
-      toast.success('You have been registered. Thanks!');
+      toast.success("Your Data Have been Updated. Thanks!");
     } catch (error) {
       console.error(
         "Error:",
@@ -39,8 +62,7 @@ export default function RegisterModal({ showModal, setShowModal }) {
       toast.error("An error occurred while registering.");
     }
   };
-
-  if (!showModal) return null;
+  if (!showUser) return null;
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <ToastContainer />
@@ -52,20 +74,18 @@ export default function RegisterModal({ showModal, setShowModal }) {
           className="hidden sm:inline-block sm:align-middle sm:h-screen"
           aria-hidden="true"
         >
-          {" "}
-          ​
         </span>
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full ">
+        <div className="inline-block align-bottom  rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full bg-white">
           <div className=" px-4 pt-5 pb-4 sm:p-6 sm:pb-4 bg-[#f7e4cd]">
-            <div className="sm:flex sm:items-start ">
+            <div className="sm:flex sm:items-start">
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <h3
-                  className="text-lg leading-6 font-medium text-gray-900"
+                  className="text-xl leading-6  text-gray-900 text-center font-bold"
                   id="modal-title"
                 >
-                  Registration
+                  Update User Info
                 </h3>
-                <div className="mt-2 ">
+                <div className="mt-2">
                   <form onSubmit={handleSubmit}>
                     <input
                       className="border rounded w-full py-2 px-3 text-grey-darker mb-3"
@@ -101,39 +121,46 @@ export default function RegisterModal({ showModal, setShowModal }) {
                     />
                     <input
                       className="border rounded w-full py-2 px-3 text-grey-darker mb-3"
-                      type="password"
-                      placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <input
-                      className="border rounded w-full py-2 px-3 text-grey-darker mb-3"
                       type="role"
                       placeholder="role"
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                       required
                     />
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      type="submit"
-                      onClick={() => {
-                        toast.success("You have been registered. Thanks!");
-                      }}
-                    >
-                      Submit
-                    </button>
+                   
+                    <div className="mb-4 flex items-center justify-between">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        type="button"
+                        onClick={() => {
+                          localStorage.setItem("loggedIn", 2);
+                          setShowUser(false);
+                        }}
+                      >
+                        Log Out
+                      </button>
+
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        type="submit"
+                        onClick={() => {
+                          toast.success("You have been registered. Thanks!");
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
-              onClick={() => setShowModal(false)}
+              onClick={() => setShowUser(false)}
               type="button"
-              className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+              className="mt-3 w-full inline-flex justify-end rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
             >
               Close
             </button>

@@ -104,7 +104,7 @@ const Admin = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
 
-      {/* Add Product Section */}
+    
       <div className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Add New Product</h2>
         <form>
@@ -178,7 +178,7 @@ const Admin = () => {
         </form>
       </div>
 
-      {/* Product List Section */}
+
       <div>
         <h2 className="text-2xl font-semibold mb-4">Product List</h2>
         <table className="min-w-full border border-collapse">

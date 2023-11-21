@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Translate.css";
-
 import { getProducts } from "../../constants";
 import NotFound from "./NotFound";
 import { GrClear } from "react-icons/gr";
@@ -19,7 +18,6 @@ function CardData({ cart, setCart }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  
 
   const getData = () => {
     axios
@@ -31,6 +29,9 @@ function CardData({ cart, setCart }) {
         console.log(error);
       });
   };
+  useEffect(() => {
+    getData();
+  }, []);
   //console.log(getData());
   //console.log(data)
 
@@ -41,7 +42,7 @@ function CardData({ cart, setCart }) {
       newIsAdded[index] = !newIsAdded[index];
       return newIsAdded;
     });
-    // Update the cart state here
+  
     if (isAdded[index]) {
       setCart((currentCart) =>
         currentCart.filter((item) => item.id !== searchResults[index].id)
@@ -54,7 +55,7 @@ function CardData({ cart, setCart }) {
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1000);
   };
 
   const handleSearch = () => {
@@ -118,7 +119,7 @@ function CardData({ cart, setCart }) {
       <div
         className="text-2xl font-bold text-orange-700 italic"
         style={{
-          animation: "moveLeftToRight 14s linear infinite", // Customize the animation duration and other properties
+          animation: "moveLeftToRight 14s linear infinite", 
         }}
       >
         Hurry Up! If you order early, you will get a free tempered glass, and
@@ -162,7 +163,7 @@ function CardData({ cart, setCart }) {
               onClick={handleFilterByPriceRange}
               className="border-2 p-1.5 ml-2 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
             >
-              <FcFilledFilter/>
+              <FcFilledFilter />
             </button>
           </div>
 
@@ -170,19 +171,19 @@ function CardData({ cart, setCart }) {
             onClick={sortPriceAscending}
             className="border-2 p-1.5 mr-4 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
           >
-            <TbSortAscendingNumbers/>
+            <TbSortAscendingNumbers />
           </button>
           <button
             onClick={sortPriceDescending}
             className="border-2 p-1.5 mr-2 bg-gray-600 hover:bg-blue-400 rounded-md text-white"
           >
-            <TbSortDescendingNumbers/>
+            <TbSortDescendingNumbers />
           </button>
           <button
             onClick={clearAllFilters}
             className="border-2 p-1.5 bg-gray-600 hover:bg-blue-400 rounded-md text-white "
           >
-            <GrClear/>
+            <GrClear />
           </button>
         </div>
       </div>
@@ -192,7 +193,7 @@ function CardData({ cart, setCart }) {
             <div
               key={product.id}
               className="w-[300px] p-4 m-2  space-x-4 space-y-4"
-              onClick={() => setSelectedProduct(searchResults[index])} // Set selectedProduct when card is clicked
+              onClick={() => setSelectedProduct(searchResults[index])} 
             >
               <div className="border border-gray-500 rounded-lg p-4 transition duration-500 ease-out transform hover:-translate-y-1 hover:scale-110 bg-white">
                 <img

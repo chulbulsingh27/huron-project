@@ -42,14 +42,14 @@ const AdminUser = () => {
     axios
       .post("http://localhost:5046/api/Users", newUser)
       .then(() => {
-        getUsers(); // Refresh the user list after adding a new user
+        getUsers(); 
         setNewUser({
           firstName: "",
           lastName: "",
           emailAddress: "",
           mobileNumber: "",
           password: "",
-          role: "user", // Reset role to "user" after adding
+          role: "user", 
         });
       })
       .catch((error) => {
@@ -61,7 +61,7 @@ const AdminUser = () => {
     axios
       .delete(`http://localhost:5046/api/Users/${userId}`)
       .then(() => {
-        getUsers(); // Refresh the user list after deleting a user
+        getUsers(); 
       })
       .catch((error) => {
         console.error("Error deleting user:", error);

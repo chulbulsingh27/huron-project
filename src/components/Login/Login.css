@@ -1,8 +1,7 @@
 .bg-wood-texture {
-    background-image: url('https://e0.pxfuel.com/wallpapers/448/775/desktop-wallpaper-waving-goodbye-to-old-windows-xp-jay-manaloto-ibm.jpg'); /* Replace with the actual path to your wood texture image */
+    background-image: url('https://e0.pxfuel.com/wallpapers/448/775/desktop-wallpaper-waving-goodbye-to-old-windows-xp-jay-manaloto-ibm.jpg'); 
     background-repeat: repeat;
     background-size: cover;
-    background-blend-mode: overlay; /* Adjust as needed */
-    /* Add any other styles for shiny effects or adjustments */
-  }
+    background-blend-mode: overlay; 
+}
   

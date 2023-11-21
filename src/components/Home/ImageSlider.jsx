@@ -14,10 +14,10 @@ function ImageSlider() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent(current => current === images.length - 1 ? 0 : current + 1);
-    }, 3000); // Change slide every 2 seconds
+    }, 3000); 
 
-    return () => clearInterval(timer); // Clear the timer when the component is unmounted
-  }, []); // Empty dependency array means the effect runs once on mount and clean up on unmount
+    return () => clearInterval(timer); 
+  }, []); 
 
   function nextSlide() {
     setCurrent(current === images.length - 1 ? 0 : current + 1);
